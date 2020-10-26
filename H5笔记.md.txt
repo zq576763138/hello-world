@@ -1,0 +1,518 @@
+# H5
+
+#### 1.新的表单属性和控件
+
+#####  1.回顾:
+
+​      text  password  radio  checkbox   submit  button  reset  file image hidden ..
+
+#####  2.新增 修改type值
+
+ email :表单自带一些基础简单的 判断 必须说 @符号
+
+ number : 有一个数字上下的 加减按钮  设置 min  max 属性  step步长
+
+ url 地址:   必须要有  http:xxxx   必须有个冒号:
+
+ tel   在手机端phone 有一个数字键盘
+
+search:  多了一个直接删除的按钮  在手机端 有搜索按钮
+
+ range  : 显示一个滑块组件   同样的有Min  max   step步长
+
+```html
+<form action="">
+    <p>邮箱地址: <input type="email" name="email"></p>
+   <p>
+       年龄: <input type="number" name="num" min="18" max="45" step="2">
+   </p>
+    <p>网址: <input type="url" name="url"></p>
+    <p>电话号码: <input type="tel" name="phone"></p>
+    <p>搜索: <input type="search" name="se"></p>
+    <p>选择: <input type="range" name="ran" min="0" step="5" max="100" value="50"></p>
+    <p><input type="submit" value="提交"></p>
+</form>
+```
+
+color  :设置颜色 
+
+ date :日期
+
+ week : 星期
+
+month : 月份
+
+```html
+<p>颜色: <input type="color" name=""></p>
+<p>日期: <input type="date"></p>
+<p>周: <input type="week"></p>
+<p>月: <input type="month"></p>
+```
+
+#### 2控件
+
+##### datalist
+
+```
+<!-- 可以存放常见的数据 用户直接点击就可以了 也可以直接输入-->
+<datalist id="list1">
+    <option value="1北京"></option>
+    <option value="2上海"></option>
+    <option value="3广州"></option>
+    <option value="4深圳"></option>
+    <option value="5杭州"></option>
+</datalist>
+```
+
+##### progress
+
+```js
+<form action="">
+
+    <p>选择城市: <input type="text" list="list1" name="city">
+    </p>
+    <!-- 可以存放常见的数据 用户直接点击就可以了 也可以直接输入-->
+    <datalist id="list1">
+        <option value="1北京"></option>
+        <option value="2上海"></option>
+        <option value="3广州"></option>
+        <option value="4深圳"></option>
+        <option value="5杭州"></option>
+    </datalist>
+    <!--进度条 默认情况不加任何属性 来回滚动-->
+    <p>进度条: <progress></progress></p>
+    <p>进度条: <progress value="50" min="0" max="100" name="pro"></progress></p>
+    <p>进度条: <progress id="pro" value="0" min="0" max="100" name="pro"></progress> <span id="span">0</span></p>
+</form>
+
+<script>
+    var timer=setInterval(function () {
+        var num=pro.value;
+        num++;
+        pro.value=num;
+        span.innerHTML=num+"%";
+        //结束 定时器
+        if(num>=100){
+            clearInterval(timer)
+            timer=null
+        }
+
+    },50)
+</script>
+```
+
+##### meter尺子
+
+  low: 下限
+
+  hige:上限
+
+  optimum  : 最佳状态
+
+```html
+<form action="">
+    <p >
+        <!--  下限和上限黄   最佳是 绿 -->
+        尺1: <meter  id="m1" min="0" max="100" low="30" high="80" optimum="60" value="0"></meter>
+        尺2: <meter  id="" min="0" max="100" low="30" high="80" optimum="60" value="70"></meter>
+    </p>
+</form>
+<script>
+    var timer=setInterval(function () {
+        var num=m1.value;
+        num++;
+        m1.value=num;
+
+        //结束 定时器
+        if(num>=100){
+            clearInterval(timer)
+            timer=null
+        }
+
+    },50)
+</script>
+```
+
+##### form另一种写法
+
+  
+
+   控件 可以不写在Form中  可以通过fom去引入
+
+```html
+<form action="" id="my_form">
+
+    <input type="submit" value="提交">
+</form>
+<!-- 
+   给form添加一个id
+   控件 通过form属性 指向的是 id值的form
+-->
+<p>用户名: <input type="text" name="txt"  form="my_form"></p>
+<p>密  码: <input type="password" name="pwd"  form="my_form"></p>
+```
+
+#### 3.form表单控件的属性
+
+  
+
+placeholder=""  用户提示信息
+autofocus
+autocomplete="off"  off表示 不会提示补全
+multiple :多选
+required : 不能为空
+minlength: 最小字符长度
+maxlength  :最大长度限制
+min  最小值
+max 最大值
+pattern="\d{6}"     支持正则的验证
+
+```html
+<form action="">
+    <!--
+         placeholder=""  用户提示信息
+         autofocus
+         autocomplete="off"  off表示 不会提示补全
+         multiple :多选
+         required : 不能为空
+         minlength: 最小字符长度
+         maxlength  :最大长度限制
+         min  最小值
+         max 最大值
+         pattern="\d{6}"     支持正则的验证
+    -->
+    <!-- 上面的属性 可以在下面的控件中挨个测试  没有冲突-->
+    <p>用户名: <input type="text" name="txt" placeholder="请输入用户名" required  minlength="6" maxlength="10"></p>
+    <!-- -->
+    <p>密  码: <input type="password" name="pwd" pattern="\d{6}" ></p>
+    <select name="" id=" " multiple  size="3">
+        <option value="">111</option>
+        <option value="">222</option>
+        <option value="">111</option>
+        <option value="">111</option>
+        <option value="">111</option>
+    </select>
+    <input type="submit" value="提交">
+</form>
+```
+
+##### 4.自定义提示
+
+  每个表单有有个js属性input.dvalidity(有效性)
+
+nput 元素的 validity 属性包括了与数据合法性关联的一系列 validity 属性:
+
+| 属性            | 描述                                                       |
+| --------------- | ---------------------------------------------------------- |
+| customError     | 设置为 true, 假如设置自定义的合法性信息。                  |
+| patternMismatch | 设置为 true, 假如元素的值不匹配它的pattern属性。           |
+| rangeOverflow   | 设置为 true, 假如元素的值大于配置的非常大的值。            |
+| rangeUnderflow  | 设置为 true, 假如元素的值小于它的非常小值。                |
+| stepMismatch    | 设置为 true, 不是根据划定的 step 属性。                    |
+| tooLong         | 设置为 true, 假如元素的值跨越了 maxLength 属性配置的长度。 |
+| typeMismatch    | 设置为 true, 不是预期相匹配的范例。                        |
+| valueMissing    | 设置为 true，假如元素 (required) 没有值。                  |
+| valid           | 设置为 true，假如元素的值是有效的。                        |
+
+可以自定义提示内容
+
+  **input.setCustomValidity("xxx")**
+
+```html
+<form action="">
+    
+    <p>用户名: <input id="user" type="text" name="txt"  required ></p>
+    <!-- -->
+    <p>年龄: <input id="age" type="number" name="pwd" min="18" max="45" ></p>
+
+    <input type="submit" value="提交">
+</form>
+<script>
+    // 自定义提示的文本信息
+    var user=document.getElementById("user");
+    var age=document.getElementById("age");
+    user.onblur=function () {//失去焦点
+        if(this.validity.valueMissing){//非空为true
+            //设置提示信息
+            this.setCustomValidity("傻帽，空的！！！")
+        }else{
+            this.setCustomValidity("")
+        }
+    }
+
+    age.onchange=function () {
+        if(this.validity.rangeUnderflow){//超过最小值时
+            this.setCustomValidity("孙子，未成年懂吗！")
+        }else if(this.validity.rangeOverflow){
+            this.setCustomValidity("孙子，老人家都不放过吗！")
+        }else {
+            this.setCustomValidity("")
+        }
+    }
+</script>
+```
+
+##### video/audio
+
+ 在H5之前 如果想要在页面中放入视频或者是音频 必须要加载flash插件
+
+video	双标签
+
+##### 属性
+
+| [audioTracks](http://www.css5.net/html.aspx?id=894)         | 返回表示可用音频轨道的 AudioTrackList 对象。                 |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| [autoplay](http://www.css5.net/html.aspx?id=895)            | 设置或返回是否在加载完成后随即播放音频/视频。                |
+| [buffered](http://www.css5.net/html.aspx?id=896)            | 返回表示音频/视频已缓冲部分的 TimeRanges 对象。              |
+| [controller](http://www.css5.net/html.aspx?id=897)          | 返回表示音频/视频当前媒体控制器的 MediaController 对象。     |
+| [controls](http://www.css5.net/html.aspx?id=898)            | 设置或返回音频/视频是否显示控件（比如播放/暂停等）。         |
+| crossOrigin                                                 | 设置或返回音频/视频的 CORS 设置。                            |
+| [currentSrc](http://www.css5.net/html.aspx?id=899)          | 返回当前音频/视频的 URL。                                    |
+| [currentTime](http://www.css5.net/html.aspx?id=900)         | 设置或返回音频/视频中的当前播放位置（以秒计）。              |
+| [defaultMuted](http://www.css5.net/html.aspx?id=901)        | 设置或返回音频/视频默认是否静音。                            |
+| [defaultPlaybackRate](http://www.css5.net/html.aspx?id=902) | 设置或返回音频/视频的默认播放速度。                          |
+| [duration](http://www.css5.net/html.aspx?id=943)            | 返回当前音频/视频的长度（以秒计）。                          |
+| [ended](http://www.css5.net/html.aspx?id=942)               | 返回音频/视频的播放是否已结束。                              |
+| [error](http://www.css5.net/html.aspx?id=941)               | 返回表示音频/视频错误状态的 MediaError 对象。                |
+| [loop](http://www.css5.net/html.aspx?id=940)                | 设置或返回音频/视频是否应在结束时重新播放。                  |
+| [mediaGroup](http://www.css5.net/html.aspx?id=939)          | 设置或返回音频/视频所属的组合（用于连接多个音频/视频元素）。 |
+| [muted](http://www.css5.net/html.aspx?id=938)               | 设置或返回音频/视频是否静音。                                |
+| [networkState](http://www.css5.net/html.aspx?id=937)        | 返回音频/视频的当前网络状态。                                |
+| [paused](http://www.css5.net/html.aspx?id=936)              | 设置或返回音频/视频是否暂停。                                |
+| [playbackRate](http://www.css5.net/html.aspx?id=935)        | 设置或返回音频/视频播放的速度。                              |
+| [played](http://www.css5.net/html.aspx?id=934)              | 返回表示音频/视频已播放部分的 TimeRanges 对象。              |
+| [preload](http://www.css5.net/html.aspx?id=933)             | 设置或返回音频/视频是否应该在页面加载后进行加载。            |
+| [readyState](http://www.css5.net/html.aspx?id=932)          | 返回音频/视频当前的就绪状态。                                |
+| [seekable](http://www.css5.net/html.aspx?id=931)            | 返回表示音频/视频可寻址部分的 TimeRanges 对象。              |
+| [seeking](http://www.css5.net/html.aspx?id=930)             | 返回用户是否正在音频/视频中进行查找。                        |
+| [src](http://www.css5.net/html.aspx?id=929)                 | 设置或返回音频/视频元素的当前来源。                          |
+| [startDate](http://www.css5.net/html.aspx?id=928)           | 返回表示当前时间偏移的 Date 对象。                           |
+| [textTracks](http://www.css5.net/html.aspx?id=927)          | 返回表示可用文本轨道的 TextTrackList 对象。                  |
+| [videoTracks](http://www.css5.net/html.aspx?id=926)         | 返回表示可用视频轨道的 VideoTrackList 对象。                 |
+| [volume](http://www.css5.net/html.aspx?id=925)              | 设置或返回音频/视频的音量。                                  |
+
+##### 方法
+
+ play()  让视频播放起来
+
+  pause() 暂停
+
+| [addTextTrack()](http://www.css5.net/html.aspx?id=888) | 向音频/视频添加新的文本轨道。             |
+| ------------------------------------------------------ | ----------------------------------------- |
+| [canPlayType()](http://www.css5.net/html.aspx?id=890)  | 检测浏览器是否能播放指定的音频/视频类型。 |
+| [load()](http://www.css5.net/html.aspx?id=891)         | 重新加载音频/视频元素。                   |
+| [play()](http://www.css5.net/html.aspx?id=892)         | 开始播放音频/视频。                       |
+| [pause()](http://www.css5.net/html.aspx?id=893)        | 暂停当前播放的音频/视频。                 |
+
+##### 事件
+
+  常见事件:
+
+​     onplay
+
+​     onpause
+
+| [abort](http://www.css5.net/html.aspx?id=924)          | 当音频/视频的加载已放弃时触发。                    |
+| ------------------------------------------------------ | -------------------------------------------------- |
+| [canplay](http://www.css5.net/html.aspx?id=923)        | 当浏览器可以开始播放音频/视频时触发。              |
+| [canplaythrough](http://www.css5.net/html.aspx?id=922) | 当浏览器可在不因缓冲而停顿的情况下进行播放时触发。 |
+| [durationchange](http://www.css5.net/html.aspx?id=921) | 当音频/视频的时长已更改时触发。                    |
+| emptied                                                | 当目前的播放列表为空时触发。                       |
+| [ended](http://www.css5.net/html.aspx?id=920)          | 当目前的播放列表已结束时触发。                     |
+| [error](http://www.css5.net/html.aspx?id=919)          | 当在音频/视频加载期间发生错误时触发。              |
+| [loadeddata](http://www.css5.net/html.aspx?id=918)     | 当浏览器已加载音频/视频的当前帧时触发。            |
+| [loadedmetadata](http://www.css5.net/html.aspx?id=917) | 当浏览器已加载音频/视频的元数据时触发。            |
+| [loadstart](http://www.css5.net/html.aspx?id=916)      | 当浏览器开始查找音频/视频时触发。                  |
+| [pause](http://www.css5.net/html.aspx?id=915)          | 当音频/视频已暂停时触发。                          |
+| [play](http://www.css5.net/html.aspx?id=914)           | 当音频/视频已开始或不再暂停时触发。                |
+| [playing](http://www.css5.net/html.aspx?id=913)        | 当音频/视频在因缓冲而暂停或停止后已就绪时触发。    |
+| [progress](http://www.css5.net/html.aspx?id=912)       | 当浏览器正在下载音频/视频时触发。                  |
+| [ratechange](http://www.css5.net/html.aspx?id=911)     | 当音频/视频的播放速度已更改时触发。                |
+| [seeked](http://www.css5.net/html.aspx?id=910)         | 当用户已移动/跳跃到音频/视频中的新位置时触发。     |
+| [seeking](http://www.css5.net/html.aspx?id=909)        | 当用户开始移动/跳跃到音频/视频中的新位置时触发。   |
+| [stalled](http://www.css5.net/html.aspx?id=908)        | 当浏览器尝试获取媒体数据，但数据不可用时触发。     |
+| [suspend](http://www.css5.net/html.aspx?id=907)        | 当浏览器刻意不获取媒体数据时触发。                 |
+| [timeupdate](http://www.css5.net/html.aspx?id=906)     | 当目前的播放位置已更改时触发。                     |
+| [volumechange](http://www.css5.net/html.aspx?id=905)   | 当音量已更改时触发。                               |
+| [waiting](http://www.css5.net/html.aspx?id=904)        | 当视频由于需要缓冲下一帧而停止时触发。             |
+
+##### 案例
+
+​	 有播放暂停的事件和属性
+
+```
+ <style>
+        .box{
+            position: relative;
+            margin: auto;
+            border:1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        #img1{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 300px;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        #play{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            cursor: pointer;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <!--视频-->
+    <video src="source/b.mp4" id="vdo" height="300"></video>
+    <!--广告-->
+    <img src="source/1.jpg" alt="" id="img1">
+    <!--播放-->
+    <img src="source/play.png" id="play" alt="">
+</div>
+<script>
+    window.onload=function () {
+        //
+        var btn=document.getElementById("play");
+        var vdo=document.getElementById("vdo");
+        var img1=document.getElementById("img1"); //广告
+        btn.onclick=function () {
+            //判断是否是播放还是暂停
+            if(vdo.paused){
+                //1. 如果暂停就播放
+                vdo.play()
+               // 2. 播放的时候 应该换成暂停的图片
+                btn.src="source/pause.png"
+              //    img1.style.display="none"  //直接修改没有问题
+            }else{
+                vdo.pause();//
+                //2
+                btn.src="source/play.png"
+            }
+        }
+        // 监听视频是否播放
+         vdo.onplay=function () { //播放事件
+             img1.style.display="none"
+         }
+         // 暂停事件
+        vdo.onpause=function () {
+            img1.style.display="block"
+        }
+
+        //鼠标的移入移出事件
+        box.onmouseover=function () {
+            btn.style.display="block";
+        }
+        box.onmouseout=function () {
+            btn.style.display="none";
+        }
+
+        //实现 双击全屏播放
+        vdo.ondblclick=function () {
+            this.webkitRequestFullScreen();
+        }
+    }
+</script>
+```
+
+#### canvas
+
+​     绘图技术
+
+​    特点:  通过js实现的
+
+​    画的是标量图 放大会失帧
+
+##### 初始
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        #box{
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<!--1. 创建画布 不能通过css去设置样式 所有的画图中的样式通过js实现
+      默认不设置宽高 300*150px的大小
+-->
+<canvas  id="box"></canvas>
+<script>
+    // 2 获取画笔
+    var ctx=box.getContext("2d");
+    console.log(ctx)
+
+</script>
+</body>
+
+</html>
+```
+
+##### 2.画矩形/填充矩形/修改画笔/填充的颜色
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        #box{
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<!--1. 创建画布 不能通过css去设置样式 所有的画图中的样式通过js实现
+      默认不设置宽高 300*150px的大小
+-->
+<canvas  id="box" width="500" height="400"></canvas>
+<script>
+    // 2 获取画笔
+    var ctx=box.getContext("2d");
+    console.log(ctx)
+    // 画矩形  没有填充的
+    //            x y  w  h
+    ctx.strokeRect(0,0,100,100);//
+    //右上角画一个 带填充的
+    ctx.fillRect(400,0,100,100) //默认的颜色是 黑色
+
+    //左下角  修改画笔的样式
+    ctx.strokeStyle="#0f0";// 换画笔为绿色
+    ctx.lineWidth=10; //画笔的粗细
+    //正常画在画布边缘会有一半画出去  不想出去要把画笔的大小的一半计算出来
+    //  添加到坐标里面去
+    ctx.strokeRect(5,295,100,100)
+
+    // 修改 填充的颜色
+    ctx.fillStyle="red";
+    //填充不是画笔画的 一半不会出去   不要减大小
+    ctx.fillRect(400,300,100,100)
+    //清除填充颜色
+    ctx.clearRect(445,345,10,10)
+
+    //在中间 描边+填充一起进行
+    ctx.strokeRect(200,150,100,100); //描边
+    // 不会被完全包裹 会有5像素的边框 因为描边有画笔的一半在外围
+    ctx.fillRect(200,150,100,100)
+</script>
+</body>
+
+</html>
+```
